@@ -23,6 +23,17 @@ const volumeSchema = new mongoose.Schema({
 
 const Volume = mongoose.model('Volume',volumeSchema)
 
+
+const reviewSchema = new mongoose.Schema({
+    text: String,
+    rating: Number,
+    book: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book'
+    }
+})
+
+const Review = mongoose.model('Review',reviewSchema)
 // Book.insertMany(
 //     [
 //         {
@@ -64,9 +75,54 @@ const Volume = mongoose.model('Volume',volumeSchema)
 // .then(res => console.log(res))
 // .catch(err => console.log(err))
 
-const showBook = async (title) => {
-    const book = await Book.findOne({title}).populate('volume')
-    console.log(book)
+// const showBook = async (title) => {
+//     const book = await Book.findOne({title}).populate('volume')
+//     console.log(book)
+// }
+
+// showBook('Book 5')
+
+// const makeBook = async (title) => {
+//     const book = new Book({
+//         title
+//     })
+
+//     const vol = new Volume({
+//         title: 'one day',
+//         noVol: 1
+//     })
+//     await vol.save()
+//    book.volume.push(vol._id)
+
+//    await book.save()
+
+// }
+
+
+// makeBook('Bismillah')
+
+// const showBook = async () => {
+//     const book = await Book.findOne({title: 'Bismillah'}).populate('volume')
+//     console.log(book)
+// }
+
+// showBook()
+
+const makeReview = async (title) => {
+    const findBook = await Book.findOne({title})
+    const review = new Review({
+        text: 'this is my review last',
+        rating: 9,
+        book: findBook._id
+    })
+    review.save()
+    showReview(review._id)
+    console.log(review._id)
 }
 
-showBook('Book 5')
+const showReview = async (id) => {
+    const review = await Review.findById(id).populate('book')
+    console.log(review)
+}
+
+makeReview('Bismillah')
