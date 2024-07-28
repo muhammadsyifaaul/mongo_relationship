@@ -4,6 +4,7 @@ mongoose.connect('mongodb://127.0.0.1/relation_db')
 .then(res => console.log('connected to mongodb'))
 .catch(err => console.log(err))
 
+// one to few
 const userSchema = new mongoose.Schema({
     name: String,
     address: [{

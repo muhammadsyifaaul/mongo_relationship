@@ -38,49 +38,53 @@ const farmSchema = new mongoose.Schema({
 const Product = mongoose.model('Product',productSchema)
 const Farm = mongoose.model('Farm',farmSchema)
 
-// Product.insertMany([
-//     {
-//         name: 'Melon',
-//         price: 9,
-//         season: 'summer'
-//     },
-//     {
-//         name: 'Watermelon',
-//         price: 12,
-//         season: 'summer'
-//     }
-//     ,
-//     {
-//         name: 'Kiwi',
-//         price: 4,
-//         season: 'summer'
-//     }
-// ])
+Product.insertMany([
+    {
+        name: 'Melon',
+        price: 9,
+        season: 'summer'
+    },
+    {
+        name: 'Watermelon',
+        price: 12,
+        season: 'summer'
+    }
+    ,
+    {
+        name: 'Kiwi',
+        price: 4,
+        season: 'summer'
+    }
+])
 
-// const makeFarm = async () => {
-//     const farm = new Farm({
-//         name: 'Big Farm',
-//         city: 'Anytown',
-//     })
-//     const melon = await Product.findOne({name: 'Melon'})
-//     farm.products.push(melon)
-//     await farm.save()
-//     console.log(farm)
-// }
+const makeFarm = async () => {
+    const farm = new Farm({
+        name: 'Big Farm',
+        city: 'Anytown',
+    })
+    const melon = await Product.findOne({name: 'Melon'})
+    farm.products.push(melon)
+    await farm.save()
+    console.log(farm)
+}
 
-// makeFarm()
+makeFarm()
 
-// const addProduct = async (id) => {
-//     const farm = await Farm.findById(id)
-//     const Watermelon = await Product.findOne({name : 'Watermelon'})
-//     farm.products.push(Watermelon)
-//     await farm.save()
-//     console.log(farm)
-// }
+const addProduct = async (id) => {
+    const farm = await Farm.findById(id)
+    const Watermelon = await Product.findOne({name : 'Watermelon'})
+    farm.products.push(Watermelon)
+    await farm.save()
+    console.log(farm)
+}
 
-// addProduct('66a39d9fbf299526cd920560')
+addProduct('66a39d9fbf299526cd920560')
 
 Farm.findOne({ name: 'Big Farm'}).populate('products','name') // didlm populte bisa mennetukan apa saja yg akan ditampilkan
+                                                            // field pertama adalah nama field / properti apa yg ingin ditampilkan data isisnya(bukan idnya)
+                                                            // pparam selanjutnya adalah data apa / properti dalam fielf pertama yg ditampilkan
+                                                            // contoh disitu adalah menampilkan data nama / properti nama dari field / pproperti products
+                                                            
 .then(farm => {
     console.log(farm)
     // for(const product of farm.products) {
