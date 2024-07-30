@@ -58,16 +58,9 @@ const Varian = mongoose.model('Varian',varianSchema)
 // makeProduct()
 
 const showProduct = async () => {
-    const samsung = await Brand.findOne({name: 'Samsung'})
-    .populate({
-        path: 'products',
-        populate: {
-            path: 'varian',
-            model: 'Varian'
-        }
-    });
+    const samsung = await Brand.findOne({name: 'Samsung'}).populate('products')
 
-    console.log(samsung)
+    console.log(samsung.products)
 }
 
 showProduct()
